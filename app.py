@@ -110,7 +110,7 @@ def qualy_comparison(race, minisectors):
     return Image.open(f"Comparison.png")
 
 races = ["Bahrain", "Imola", "Spain", "Monaco", "France", 
-        "Netherlands", "Italy", "Turkey",
+        "Netherlands", "Monza", "Turkey",
         "Saudi Arabia", "Abu Dhabi"]
 
 gr.Interface(qualy_comparison, title="Qualifying Comparison between Hamilton and Verstappen", 
