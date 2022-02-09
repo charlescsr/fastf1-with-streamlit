@@ -23,6 +23,9 @@ def qualy_comparison(race, minisectors):
 
     laps = quali.load_laps(with_telemetry=True)
 
+    # Clear Cache
+    ff1.Cache.clear_cache('cache')
+
     # Select the laps from Hamilton and Verstappen
     laps_ver = laps.pick_driver('VER')
     laps_ham = laps.pick_driver('HAM')
@@ -109,7 +112,7 @@ def qualy_comparison(race, minisectors):
 
     return Image.open(f"Comparison.png")
 
-races = ["Bahrain", "Imola", "Spain", "Monaco", "France", 
+races = ["Bahrain", "Imola", "Monaco", "France", 
         "Netherlands", "Monza", "Turkey",
         "Saudi Arabia", "Abu Dhabi"]
 

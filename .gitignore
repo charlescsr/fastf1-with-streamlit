@@ -1,5 +1,6 @@
-cache/
+cache/2021/
 .ipynb_checkpoints/
 F1.ipynb
 Comparison.png
 flagged/
+cache/fastf1_http_cache.sqlite
