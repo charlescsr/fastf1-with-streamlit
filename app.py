@@ -4,19 +4,22 @@ from matplotlib import pyplot as plt
 from matplotlib.pyplot import figure
 from matplotlib.collections import LineCollection
 from matplotlib import cm
+import warnings
+import os
+warnings.filterwarnings("ignore")
 import numpy as np
 import pandas as pd
 import gradio as gr
+from PIL import Image
 
-q_or_r = ["Q", "R"]
 # Enable the cache
 ff1.Cache.enable_cache('cache') 
 
 # Setup plotting
 plotting.setup_mpl()
 
-def qualy_comparison(race, choice, minisectors):
-    quali = ff1.get_session(2021, race, choice)
+def qualy_comparison(race, minisectors):
+    quali = ff1.get_session(2021, race, "Q")
 
     laps = quali.load_laps(with_telemetry=True)
 
@@ -97,7 +100,21 @@ def qualy_comparison(race, choice, minisectors):
     cbar = plt.colorbar(mappable=lc_comp, boundaries=np.arange(1,4))
     cbar.set_ticks([1, 2])
     cbar.set_ticklabels(['VER', 'HAM'])
+    cbar.ax.tick_params(labelsize=20)
 
-    #plt.savefig(f"2021_ver_ham_q.png", dpi=300)
+    plt.savefig(f"Comparison.png", dpi=300)
 
-    return plt.show()
+    # Clear the plot
+    plt.clf()
+
+    return Image.open(f"Comparison.png")
+
+races = ["Bahrain", "Imola", "Spain", "Monaco", "France", 
+        "Netherlands", "Italy", "Turkey",
+        "Saudi Arabia", "Abu Dhabi"]
+
+gr.Interface(qualy_comparison, title="Qualifying Comparison between Hamilton and Verstappen", 
+             description="This plot shows the fastest driver per minisector in qualifying between Hamilton and Verstappen",
+             inputs=[   gr.inputs.Dropdown(choices=races),
+                        gr.inputs.Slider(minimum=25, maximum=50, step=5)], 
+            outputs="image").launch()
