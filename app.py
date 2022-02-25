@@ -112,7 +112,7 @@ def qualy_comparison(race, minisectors):
 
     return Image.open(f"Comparison.png")
 
-races = ["Bahrain", "Imola", "Monaco", "France", 
+races = ["", "Bahrain", "Imola", "Monaco", "France", 
         "Netherlands", "Monza", "Turkey",
         "Saudi Arabia", "Abu Dhabi"]
 
@@ -125,9 +125,8 @@ def main():
     race = st.selectbox("Race", races)
     minisectors = st.slider("Number of Minisectors", 25, 35, 25, 5)
 
-    res = qualy_comparison(race, minisectors)
-
     if st.button("Show"):
+        res = qualy_comparison(race, minisectors)
         st.image(res, caption="Comparison between Lewis and Max at " + str(race))
 
 if __name__ == '__main__':
