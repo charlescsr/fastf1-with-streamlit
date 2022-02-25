@@ -9,7 +9,7 @@ import os
 warnings.filterwarnings("ignore")
 import numpy as np
 import pandas as pd
-import gradio as gr
+import streamlit as st
 from PIL import Image
 
 # Enable the cache
@@ -116,8 +116,19 @@ races = ["Bahrain", "Imola", "Monaco", "France",
         "Netherlands", "Monza", "Turkey",
         "Saudi Arabia", "Abu Dhabi"]
 
-gr.Interface(qualy_comparison, title="Qualifying Comparison between Hamilton and Verstappen", 
-             description="This plot shows the fastest driver per minisector in qualifying between Hamilton and Verstappen",
-             inputs=[   gr.inputs.Dropdown(choices=races),
-                        gr.inputs.Slider(minimum=25, maximum=50, step=5)], 
-            outputs="image").launch()
+def main():
+    st.title("Qualifying Comparison between Hamilton and Verstappen")
+    st.markdown("### This plot shows the fastest driver per minisector in qualifying between Hamilton and Verstappen")
+    st.markdown("**Give it time to download the race data**")
+
+    # Inputs
+    race = st.selectbox("Race", races)
+    minisectors = st.slider("Number of Minisectors", 25, 35, 25, 5)
+
+    res = qualy_comparison(race, minisectors)
+
+    if st.button("Show"):
+        st.image(res, caption="Comparison between Lewis and Max at " + str(race))
+
+if __name__ == '__main__':
+    main()
